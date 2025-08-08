@@ -3,7 +3,7 @@ name: Update MoneyBot
 on:
   schedule:
     # Runs every 5 minutes
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch: # Allows manual trigger
 
 jobs:
