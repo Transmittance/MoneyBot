@@ -9,8 +9,8 @@ import pytz
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-TOKEN = "7962129566:AAG3m-uW8ziyz8qvgtwaoDje-kOKgKRAfJM"
-CHAT_ID = "@Money_in_Move"
+TOKEN = os.getenv('TELEGRAM_TOKEN')
+CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MESSAGE_FILE = "message_id.json"
 
 bot = telebot.TeleBot(TOKEN)

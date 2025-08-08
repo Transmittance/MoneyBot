@@ -1,0 +1,8 @@
+pyTelegramBotAPI==4.28.0
+pytest==8.4.1
+pytz==2025.2
+requests==2.32.4
+telebot==0.0.5
+typing_extensions==4.14.1
+urllib3==1.26.15
+yarl==1.20.1
