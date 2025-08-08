@@ -13,6 +13,15 @@ TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MESSAGE_FILE = "message_id.json"
 
+# Validate required environment variables
+if not TOKEN:
+    raise ValueError("TELEGRAM_TOKEN environment variable is not set")
+if not CHAT_ID:
+    raise ValueError("TELEGRAM_CHAT_ID environment variable is not set")
+
+print(f"Using TOKEN: {TOKEN[:10]}...{TOKEN[-4:] if TOKEN else 'None'}")
+print(f"Using CHAT_ID: {CHAT_ID}")
+
 bot = telebot.TeleBot(TOKEN)
 
 def safe_request(url, params=None, retries=3):

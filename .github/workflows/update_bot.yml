@@ -1,0 +1,59 @@
+name: Update MoneyBot
+
+on:
+  schedule:
+    # Runs every 30 minutes during market hours (Moscow time 10:00-19:00 on weekdays)
+    - cron: '*/30 9-18 * * 1-5'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-bot:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Download previous message_id.json
+      uses: actions/download-artifact@v4
+      with:
+        name: message-id
+        path: .
+      continue-on-error: true
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Debug environment
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        echo "Token length: ${#TELEGRAM_TOKEN}"
+        echo "Chat ID: $TELEGRAM_CHAT_ID"
+        echo "Python version: $(python --version)"
+        echo "Current directory contents:"
+        ls -la
+    
+    - name: Run MoneyBot
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        python main.py
+    
+    - name: Upload message_id.json as artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: message-id
+        path: message_id.json
+        retention-days: 90
+        overwrite: true
