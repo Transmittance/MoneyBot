@@ -3,7 +3,7 @@ name: Update MoneyBot
 on:
   schedule:
     # Runs every 30 minutes during market hours (Moscow time 10:00-19:00 on weekdays)
-    - cron: '*/30 9-18 * * 1-5'
+    - cron: '*/5 * * * *'
   workflow_dispatch: # Allows manual trigger
 
 jobs:
